@@ -85,8 +85,9 @@ sounds['test'].onaudioprocess = function(e) {
 
 var name = 'notes';
 sounds[name] = context.createOscillator();
-sounds[name].frequency.value = 440;
+sounds[name].frequency.value = 261.6; // middle C
 sounds[name].playing = false;
+sound.start(0);
 
 function toggle_play(sound_name) {
   var sound = sounds[sound_name];
