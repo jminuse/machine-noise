@@ -40,7 +40,7 @@ input[type=button] {
 
 <div id='controls' style='position:absolute; top:50%; width:100%;'>
 <input type="button" value="White noise" onclick="toggle_play('white');"/>
-<input type="button" value="Test notes" onclick="toggle_play('notes');"/>
+<input type="button" value="Test music" onclick="toggle_play('notes');"/>
 <input id="volume-slider" type="range" min="0.0" max="1.0" step="0.01"/>
 </div>
 
@@ -101,7 +101,12 @@ function rand_walk() {
   if( sounds['notes'].frequency.value > 500 ) 500*2 - sounds['notes'].frequency.value;
   if( sounds['notes'].frequency.value < 200 ) 200*2 - sounds['notes'].frequency.value;
 }
-setInterval(rand_walk, 200);
+var semitone_distances = [0,2,4,5,7,9,11,12];
+function equal_temperament() {
+  semitone_distance = semitone_distances[ (Math.random()*semitone_distances.length()) | 0 ];
+  sounds['notes'].frequency.value = 440 * Math.pow(2, (semitone_distance/12));
+}
+setInterval(equal_temperament, 500);
 
 function toggle_play(sound_name) {
   var sound = sounds[sound_name];
