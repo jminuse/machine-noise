@@ -45,10 +45,10 @@ input[type=button] {
 </div>
 
 <script>
-
 var exponent = 14; // anything between 8 and 14 is OK
 var bufferSize = 2 << (exponent-1); // buffer is a time series of notes
 var context = new AudioContext();
+alert(context.sampleRate+' Hz');
 var sounds = {};
 function init_sound(name) {
     sounds[name] = context.createScriptProcessor(bufferSize, 0, 2);
