@@ -7,7 +7,7 @@
 
 <body>
 
-White noise should play on page load...
+White noise should play on page load
 
 <script>
 var whiteNoiseGen = function(){
@@ -15,6 +15,7 @@ var whiteNoiseGen = function(){
   var bufferSize = 2 << (exponent-1);
   var context = new AudioContext();
   whiteNoise = context.createScriptProcessor(bufferSize, 0, 2);
+  alert(whiteNoise);
   whiteNoise.onaudioprocess = function(e) {
     var outputBuffer = e.outputBuffer;
     for (var channel = 0; channel < outputBuffer.numberOfChannels; channel++) {
