@@ -7,11 +7,11 @@
 
 <body>
 
-White noise should play on page load
+<button onclick="toggle_play()">Toggle Play</button>
 
 <script>
 
-var whiteNoiseGen = function(){
+var initialize_white_noise = function(){
   var exponent = 13 // anything between 8 and 14 is OK
   var bufferSize = 2 << (exponent-1);
   var context = new AudioContext();
@@ -25,9 +25,17 @@ var whiteNoiseGen = function(){
       }
     }
   }
-  whiteNoise.connect(context.destination);
 }
-whiteNoiseGen();
+initialize_white_noise();
+var playing = false;
+function toggle_play() {
+  if(!playing) {
+    whiteNoise.connect(context.destination);
+  } else {
+    whiteNoise.disconnect(context.destination);
+  }
+  playing = !playing;
+}
 
 </script>
 </body>
