@@ -34,7 +34,7 @@ sounds['white'].onaudioprocess = function(e) {
 }
 
 function toggle_play(sound_name) {
-  if(!playing) {
+  if(!sounds[sound_name].playing) {
     sounds[sound_name].connect(context.destination);
   } else {
     sounds[sound_name].disconnect(context.destination);
