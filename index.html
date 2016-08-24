@@ -103,7 +103,7 @@ function rand_walk() {
 }
 var semitone_distances = [0,2,4,5,7,9,11,12];
 function equal_temperament() {
-  semitone_distance = semitone_distances[ (Math.random()*semitone_distances.length()) | 0 ];
+  semitone_distance = semitone_distances[ (Math.random()*semitone_distances.length) | 0 ];
   sounds['notes'].frequency.value = 440 * Math.pow(2, (semitone_distance/12));
 }
 setInterval(equal_temperament, 500);
