@@ -40,7 +40,7 @@ input[type=button] {
 
 <div id='controls' style='position:absolute; top:50%; width:100%;'>
 <input type="button" value="White noise" onclick="toggle_play('white');"/>
-<input type="button" value="Test note" onclick="toggle_play('notes');"/>
+<input type="button" value="Test notes" onclick="toggle_play('notes');"/>
 <input id="volume-slider" type="range" min="0.0" max="1.0" step="0.01"/>
 </div>
 
@@ -89,10 +89,11 @@ sounds[name].frequency.value = 261.6; // middle C
 sounds[name].playing = false;
 sounds[name].start(0);
 
-sounds['notes'].onaudioprocess = function(e) {
+function change_note() {
   var milliseconds = +new Date();
   sounds['notes'].frequency.value = 200+(milliseconds/10) % 200
 }
+setInterval(change_note, 100);
 
 function toggle_play(sound_name) {
   var sound = sounds[sound_name];
