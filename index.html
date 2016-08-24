@@ -75,7 +75,8 @@ sounds['test'].onaudioprocess = function(e) {
   for (var channel = 0; channel < outputBuffer.numberOfChannels; channel++) {
     var outputData = outputBuffer.getChannelData(channel);
     for (var i = 0; i < bufferSize; i++) {
-      time = i/context.sampleRate + start_time/1000;
+      var time = i/context.sampleRate + start_time/1000;
+      var period = 2.0;
       var angle = 2 * 3.14159 * time / period;
       outputData[i] = volume_slider.value * Math.cos(angle);
     }
