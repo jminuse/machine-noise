@@ -101,14 +101,16 @@ function rand_walk() {
   if( sounds['notes'].frequency.value > 500 ) 500*2 - sounds['notes'].frequency.value;
   if( sounds['notes'].frequency.value < 200 ) 200*2 - sounds['notes'].frequency.value;
 }
-//var semitone_distances = [0,2,4,5,7,9,11,12]; // basic
+//var semitone_distances = [0,2,4,5,7,9,11,12]; // major scale
+//var semitone_distances = [0,2,3,5,7,8,10,12] //minor scale
 var semitone_distances = [0,3,5,6,7,10,12]; // jazzier
 // var semitone_distances = // [4,5,7,11] // Ryukyu scale
 function equal_temperament() {
   semitone_distance = semitone_distances[ (Math.random()*semitone_distances.length) | 0 ];
   sounds['notes'].frequency.value = 440 * Math.pow(2, (semitone_distance/12));
+  if(Math.random()<0.1) sounds['notes'].frequency.value = 0; // pause?
 }
-setInterval(equal_temperament, 125);
+setInterval(equal_temperament, 250);
 
 function toggle_play(sound_name) {
   var sound = sounds[sound_name];
