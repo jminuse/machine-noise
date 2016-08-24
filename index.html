@@ -11,10 +11,14 @@
 
 <script>
 
+var playing = false;
+var context = null;
+var whiteNoise = null;
+
 var initialize_white_noise = function(){
   var exponent = 13 // anything between 8 and 14 is OK
   var bufferSize = 2 << (exponent-1);
-  var context = new AudioContext();
+  context = new AudioContext();
   whiteNoise = context.createScriptProcessor(bufferSize, 0, 2);
   whiteNoise.onaudioprocess = function(e) {
     var outputBuffer = e.outputBuffer;
@@ -27,7 +31,7 @@ var initialize_white_noise = function(){
   }
 }
 initialize_white_noise();
-var playing = false;
+
 function toggle_play() {
   if(!playing) {
     whiteNoise.connect(context.destination);
