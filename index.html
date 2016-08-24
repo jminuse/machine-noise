@@ -11,7 +11,6 @@
 
 <script>
 
-var playing = false;
 var context = null;
 var sounds = {};
 
@@ -19,31 +18,28 @@ function initialize_sound() {
   var exponent = 14; // anything between 8 and 14 is OK
   var bufferSize = 2 << (exponent-1);
   context = new AudioContext();
+  sounds['white'] = context.createScriptProcessor(bufferSize, 0, 2);
+  sounds['white'].playing = false;
 }
 initialize_sound();
 
-var initialize_white_noise = function(){
-  sounds['white'] = context.createScriptProcessor(bufferSize, 0, 2);
-  sounds['white'].onaudioprocess = function(e) {
-    var outputBuffer = e.outputBuffer;
-    for (var channel = 0; channel < outputBuffer.numberOfChannels; channel++) {
-      var outputData = outputBuffer.getChannelData(channel);
-      for (var i = 0; i < bufferSize; i++) {
-        outputData[i] = Math.random()*2-1; // audio points are in range [-1.0,1.0]
-        // (1+Math.cos((new Date())*0.001)) 
-      }
+sounds['white'].onaudioprocess = function(e) {
+  var outputBuffer = e.outputBuffer;
+  for (var channel = 0; channel < outputBuffer.numberOfChannels; channel++) {
+    var outputData = outputBuffer.getChannelData(channel);
+    for (var i = 0; i < bufferSize; i++) {
+      outputData[i] = Math.random()*2-1; // audio points are in range [-1.0,1.0]
     }
   }
 }
-initialize_white_noise();
 
-function toggle_play() {
+function toggle_play(sound_name) {
   if(!playing) {
-    sounds['white'].connect(context.destination);
+    sounds[sound_name].connect(context.destination);
   } else {
-    sounds['white'].disconnect(context.destination);
+    sounds[sound_name].disconnect(context.destination);
   }
-  playing = !playing;
+  sounds[sound_name].playing = !sounds[sound_name].playing;
 }
 
 </script>
