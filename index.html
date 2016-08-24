@@ -40,7 +40,8 @@ input[type=button] {
 
 <div id='controls' style='position:absolute; top:50%; width:100%;'>
 <input type="button" value="White noise" onclick="toggle_play('white');"/>
-<input id="volume-slider" type="range" min="0.0" max="1.0" step="0.01"/>
+<input type="button" value="Test sound" onclick="toggle_play('test');"/>
+<input id="volume-slider" type="range" min="0.0" max="1.0" step="0.01" value="0.5"/>
 </div>
 
 <script>
@@ -49,11 +50,13 @@ var exponent = 14; // anything between 8 and 14 is OK
 var bufferSize = 2 << (exponent-1);
 var context = new AudioContext();
 var sounds = {};
-sounds['white'] = context.createScriptProcessor(bufferSize, 0, 2);
-sounds['white'].playing = false;
+function init_sound(name) {
+    sounds[sound] = context.createScriptProcessor(bufferSize, 0, 2);
+    sounds[sound].playing = false;
+}
 var volume_slider = document.getElementById('volume-slider');
-volume_slider.value = 0.1;
 
+init_sound('white');
 sounds['white'].onaudioprocess = function(e) {
   var outputBuffer = e.outputBuffer;
   for (var channel = 0; channel < outputBuffer.numberOfChannels; channel++) {
@@ -63,7 +66,19 @@ sounds['white'].onaudioprocess = function(e) {
     }
   }
 }
-
+init_sound('test');
+sounds['test'].onaudioprocess = function(e) {
+  var outputBuffer = e.outputBuffer;
+  for (var channel = 0; channel < outputBuffer.numberOfChannels; channel++) {
+    var outputData = outputBuffer.getChannelData(channel);
+    var time = +new Date();
+    var phase_angle = time/1000.0;
+    for (var i = 0; i < bufferSize; i++) {
+      var angle = 2*3.14159 * i/buffer_size;
+      outputData[i] = volume_slider.value * Math.cos(angle + phase_angle);
+    }
+  }
+}
 function toggle_play(sound_name) {
   var sound = sounds[sound_name];
   if(!sound.playing) {
