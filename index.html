@@ -11,17 +11,12 @@
 
 <script>
 
-var context = null;
+var exponent = 14; // anything between 8 and 14 is OK
+var bufferSize = 2 << (exponent-1);
+var context = new AudioContext();
 var sounds = {};
-
-function initialize_sound() {
-  var exponent = 14; // anything between 8 and 14 is OK
-  var bufferSize = 2 << (exponent-1);
-  context = new AudioContext();
-  sounds['white'] = context.createScriptProcessor(bufferSize, 0, 2);
-  sounds['white'].playing = false;
-}
-initialize_sound();
+sounds['white'] = context.createScriptProcessor(bufferSize, 0, 2);
+sounds['white'].playing = false;
 
 sounds['white'].onaudioprocess = function(e) {
   var outputBuffer = e.outputBuffer;
