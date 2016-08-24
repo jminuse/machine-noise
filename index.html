@@ -89,13 +89,16 @@ sounds[name].frequency.value = 261.6; // middle C
 sounds[name].playing = false;
 sounds[name].start(0);
 
+sounds['notes'].onaudioprocess = function(e) {
+  var milliseconds = +new Date();
+  sounds['notes].frequency.value = 200+(milliseconds/10) % 200
+}
+
 function toggle_play(sound_name) {
   var sound = sounds[sound_name];
   if(!sound.playing) {
     sound.connect(context.destination);
-    //sound.start(0);
   } else {
-    //sound.stop(0);
     sound.disconnect(context.destination);
   }
   sound.playing = !sound.playing;
