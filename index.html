@@ -12,6 +12,7 @@ White noise should play on page load
 <script>
 
 var whiteNoiseGen = function(){
+  alert('Starting');
   var exponent = 13 // anything between 8 and 14 is OK
   var bufferSize = 2 << exponent;
   alert(bufferSize);
