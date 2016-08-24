@@ -17,13 +17,14 @@ var context = new AudioContext();
 var sounds = {};
 sounds['white'] = context.createScriptProcessor(bufferSize, 0, 2);
 sounds['white'].playing = false;
+var volume = 0.1;
 
 sounds['white'].onaudioprocess = function(e) {
   var outputBuffer = e.outputBuffer;
   for (var channel = 0; channel < outputBuffer.numberOfChannels; channel++) {
     var outputData = outputBuffer.getChannelData(channel);
     for (var i = 0; i < bufferSize; i++) {
-      outputData[i] = Math.random()*2-1; // audio points are in range [-1.0,1.0]
+      outputData[i] = volume * ( Math.random()*2-1 ); // audio points are in range [-1.0,1.0]
     }
   }
 }
