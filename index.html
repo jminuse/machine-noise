@@ -94,8 +94,8 @@ function toggle_play(sound_name) {
     sound.connect(context.destination);
     sound.start(0);
   } else {
-    sound.disconnect(context.destination);
     sound.stop(0);
+    sound.disconnect(context.destination);
   }
   sound.playing = !sound.playing;
 }
