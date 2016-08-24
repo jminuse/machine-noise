@@ -97,7 +97,7 @@ function rand_note() {
   sounds['notes'].frequency.value = 200+Math.random()*200;
 }
 function rand_walk() {
-  sounds['notes'].frequency.value += Math.random()*20 + Math.random()*20 + Math.random()*20; //approximate Gaussian
+  sounds['notes'].frequency.value += (Math.random()-0.5)*20 + (Math.random()-0.5)*20 + (Math.random()-0.5)*20; //approximate Gaussian
   if( sounds['notes'].frequency.value > 500 ) 500*2 - sounds['notes'].frequency.value;
   if( sounds['notes'].frequency.value < 200 ) 200*2 - sounds['notes'].frequency.value;
 }
