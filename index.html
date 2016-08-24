@@ -72,11 +72,12 @@ sounds['test'].onaudioprocess = function(e) {
   var outputBuffer = e.outputBuffer;
   for (var channel = 0; channel < outputBuffer.numberOfChannels; channel++) {
     var outputData = outputBuffer.getChannelData(channel);
-    var time = +new Date();
-    var phase_angle = time/1000.0;
-    for (var i = 0; i < bufferSize; i++) {
+    var milliseconds = +new Date();
+    var period = 2.0;
+    var phase_angle = period * milliseconds/1000;
+    for (var i = 0; i < bufferSize*(0.5+0.5*Math.cos(phase_angle)); i++) {
       var angle = 2*3.14159 * i/bufferSize;
-      outputData[i] = volume_slider.value * Math.cos( 2*angle + phase_angle);
+      outputData[i] = volume_slider.value;
     }
   }
 }
