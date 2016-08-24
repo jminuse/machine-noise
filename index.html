@@ -92,8 +92,10 @@ function toggle_play(sound_name) {
   var sound = sounds[sound_name];
   if(!sound.playing) {
     sound.connect(context.destination);
+    sound.start(0);
   } else {
     sound.disconnect(context.destination);
+    sound.stop(0);
   }
   sound.playing = !sound.playing;
 }
