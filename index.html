@@ -9,6 +9,8 @@
 
 <button onclick="toggle_play('white')">White noise</button>
 
+<input id="volume-slider" type ="range" min ="0.0" max="1.0" step ="0.01"/>
+
 <script>
 
 var exponent = 14; // anything between 8 and 14 is OK
@@ -17,14 +19,14 @@ var context = new AudioContext();
 var sounds = {};
 sounds['white'] = context.createScriptProcessor(bufferSize, 0, 2);
 sounds['white'].playing = false;
-var volume = 0.1;
+var volume_slider = document.getElementById('volume-slider');
 
 sounds['white'].onaudioprocess = function(e) {
   var outputBuffer = e.outputBuffer;
   for (var channel = 0; channel < outputBuffer.numberOfChannels; channel++) {
     var outputData = outputBuffer.getChannelData(channel);
     for (var i = 0; i < bufferSize; i++) {
-      outputData[i] = volume * ( Math.random()*2-1 ); // audio points are in range [-1.0,1.0]
+      outputData[i] = volume_slider.value * ( Math.random()*2-1 ); // audio points are in range [-1.0,1.0]
     }
   }
 }
