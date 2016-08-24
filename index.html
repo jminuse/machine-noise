@@ -16,7 +16,7 @@ var context = null;
 var whiteNoise = null;
 
 var initialize_white_noise = function(){
-  var exponent = 13 // anything between 8 and 14 is OK
+  var exponent = 14; // anything between 8 and 14 is OK
   var bufferSize = 2 << (exponent-1);
   context = new AudioContext();
   whiteNoise = context.createScriptProcessor(bufferSize, 0, 2);
@@ -25,7 +25,7 @@ var initialize_white_noise = function(){
     for (var channel = 0; channel < outputBuffer.numberOfChannels; channel++) {
       var outputData = outputBuffer.getChannelData(channel);
       for (var i = 0; i < bufferSize; i++) {
-        outputData[i] = Math.random()*2-1;
+        outputData[i] = Math.cos(i*0.1) * Math.random()*2-1;
       }
     }
   }
