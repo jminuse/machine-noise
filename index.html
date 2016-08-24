@@ -75,9 +75,8 @@ sounds['test'].onaudioprocess = function(e) {
     var milliseconds = +new Date();
     var period = 2.0;
     var phase_angle = period * milliseconds/1000;
-    for (var i = 0; i < bufferSize*(0.5+0.5*Math.cos(phase_angle)); i++) {
-      var angle = 2*3.14159 * i/bufferSize;
-      outputData[i] = volume_slider.value;
+    for (var i = 0; i < bufferSize/2; i++) {
+      outputData[i] = volume_slider.value * ( Math.random()*2-1 );
     }
   }
 }
