@@ -25,7 +25,7 @@ var initialize_white_noise = function(){
     for (var channel = 0; channel < outputBuffer.numberOfChannels; channel++) {
       var outputData = outputBuffer.getChannelData(channel);
       for (var i = 0; i < bufferSize; i++) {
-        outputData[i] = Math.cos((new Date())*0.001) * Math.random()*2-1;
+        outputData[i] = (1+Math.cos((new Date())*0.001)) * Math.random()*2-1;
       }
     }
   }
