@@ -91,7 +91,7 @@ sounds[name].start(0);
 
 sounds['notes'].onaudioprocess = function(e) {
   var milliseconds = +new Date();
-  sounds['notes].frequency.value = 200+(milliseconds/10) % 200
+  sounds['notes'].frequency.value = 200+(milliseconds/10) % 200
 }
 
 function toggle_play(sound_name) {
