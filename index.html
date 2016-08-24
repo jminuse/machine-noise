@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Machine Noise</title>
+</head>
+
+<body>
+
+White noise should play on page load
+
+<script>
+
+var whiteNoiseGen = function(){
+  var exponent = 13 // anything between 8 and 14 is OK
+  var bufferSize = 2 << exponent;
+  alert(bufferSize);
+  
+  whiteNoise = context.createScriptProcessor(bufferSize, 0, 2);
+  whiteNoise.onaudioprocess = function(e) {
+    var outputBuffer = e.outputBuffer;
+    for (var channel = 0; channel < outputBuffer.numberOfChannels; channel++) {
+      var outputData = outputBuffer.getChannelData(channel);
+      for (var i = 0; i < bufferSize; i++) {
+        outputData[i] = Math.random()*2-1;
+      }
+    }
+  }
+
+whiteNoiseGen();
+
+</script>
+
+</body>
+
+</html>
+
