@@ -10,16 +10,11 @@
 White noise should play on page load...
 
 <script>
-document.body.innerHTML = "Simpler and simpler test cases";
-alert('Entering script tag');
-
 var whiteNoiseGen = function(){
-  alert('Starting');
   var exponent = 13 // anything between 8 and 14 is OK
-  var bufferSize = 2 << exponent;
-  alert(bufferSize);
-  
+  var bufferSize = 2 << (exponent-1);
   whiteNoise = context.createScriptProcessor(bufferSize, 0, 2);
+  document.body.innerHTML += String(whiteNoise);
   whiteNoise.onaudioprocess = function(e) {
     var outputBuffer = e.outputBuffer;
     for (var channel = 0; channel < outputBuffer.numberOfChannels; channel++) {
