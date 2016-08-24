@@ -20,6 +20,7 @@ var sounds = {};
 sounds['white'] = context.createScriptProcessor(bufferSize, 0, 2);
 sounds['white'].playing = false;
 var volume_slider = document.getElementById('volume-slider');
+volume_slider.value = 0.1;
 
 sounds['white'].onaudioprocess = function(e) {
   var outputBuffer = e.outputBuffer;
