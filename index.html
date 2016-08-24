@@ -47,7 +47,7 @@ input[type=button] {
 <script>
 
 var exponent = 14; // anything between 8 and 14 is OK
-var bufferSize = 2 << (exponent-1);
+var bufferSize = 2 << (exponent-1); // buffer is a time series of notes
 var context = new AudioContext();
 var sounds = {};
 function init_sound(name) {
@@ -70,13 +70,14 @@ sounds['white'].onaudioprocess = function(e) {
 init_sound('test');
 sounds['test'].onaudioprocess = function(e) {
   var outputBuffer = e.outputBuffer;
+  var start_time = +new Date();
   for (var channel = 0; channel < outputBuffer.numberOfChannels; channel++) {
     var outputData = outputBuffer.getChannelData(channel);
-    var milliseconds = +new Date();
-    var period = 2.0;
-    var phase_angle = period * milliseconds/1000;
-    for (var i = 0; i < bufferSize/2; i++) {
-      outputData[i] = volume_slider.value * ( Math.random()*2-1 );
+    for (var i = 0; i < bufferSize; i++) {
+      time = i+start_time;
+      var period = 2.0;
+      var angle = 2 * 3.14159 * period * time/1000;
+      outputData[i] = volume_slider.value * Math.cos(angle);
     }
   }
 }
