@@ -41,7 +41,7 @@ input[type=button] {
 <div id='controls' style='position:absolute; top:50%; width:100%;'>
 <input type="button" value="White noise" onclick="toggle_play('white');"/>
 <input type="button" value="Test sound" onclick="toggle_play('test');"/>
-<input id="volume-slider" type="range" min="0.0" max="1.0" step="0.01" value="0.5"/>
+<input id="volume-slider" type="range" min="0.0" max="1.0" step="0.01"/>
 </div>
 
 <script>
@@ -55,6 +55,7 @@ function init_sound(name) {
     sounds[name].playing = false;
 }
 var volume_slider = document.getElementById('volume-slider');
+volume_slider.value = 0.5;
 
 init_sound('white');
 sounds['white'].onaudioprocess = function(e) {
@@ -75,7 +76,7 @@ sounds['test'].onaudioprocess = function(e) {
     var phase_angle = time/1000.0;
     for (var i = 0; i < bufferSize; i++) {
       var angle = 2*3.14159 * i/buffer_size;
-      outputData[i] = volume_slider.value * Math.cos(angle + phase_angle);
+      outputData[i] = volume_slider.value * Math.cos(angle);
     }
   }
 }
