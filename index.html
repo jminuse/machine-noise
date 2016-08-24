@@ -47,7 +47,7 @@ input[type=button] {
 <script>
 var context = new AudioContext();
 var sample_duration_seconds = 1.0;
-var bufferSize = sample_duration_seconds * context.sampleRate; // buffer is a time series of notes
+var bufferSize = 2 << 12; // sample_duration_seconds * context.sampleRate; // buffer is a time series of notes
 var sounds = {};
 function init_sound(name) {
     var input_channels = 0;
