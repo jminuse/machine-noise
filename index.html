@@ -89,11 +89,14 @@ sounds[name].frequency.value = 261.6; // middle C
 sounds[name].playing = false;
 sounds[name].start(0);
 
-function change_note() {
+function strobe_note() {
   var milliseconds = +new Date();
   sounds['notes'].frequency.value = 200+(milliseconds/10) % 200
 }
-setInterval(change_note, 100);
+function rand_note() {
+  sounds['notes'].frequency.value = 200+Math.random()*200;
+}
+setInterval(rand_note, 500);
 
 function toggle_play(sound_name) {
   var sound = sounds[sound_name];
