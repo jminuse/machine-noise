@@ -51,7 +51,9 @@ var context = new AudioContext();
 alert(context.sampleRate+' Hz');
 var sounds = {};
 function init_sound(name) {
-    sounds[name] = context.createScriptProcessor(bufferSize, 0, 2);
+    var input_channels = 0;
+    var output_channels = 1;
+    sounds[name] = context.createScriptProcessor(bufferSize, input_channels, output_channels);
     sounds[name].playing = false;
 }
 var volume_slider = document.getElementById('volume-slider');
