@@ -50,9 +50,14 @@ var context = new AudioContext();
 var sounds = {};
 var volume_slider = document.getElementById('volume-slider');
 volume_slider.value = 0.5;
+var volume = context.createGain();
+volume.connect(context.destination);
+volume_slider.onchange = function() {
+    volume.gain.value = volume_slider.value;
+};
+
 var scale_slider = document.getElementById('scale-slider');
 scale_slider.value = 0;
-
 var name = 'notes';
 sounds[name] = context.createOscillator();
 var wave_types = ['sine', 'square', 'sawtooth', 'triangle', 'custom'];
@@ -91,7 +96,8 @@ function playNote(note, duration) {
     var osc = context.createOscillator();
     osc.frequency.value = note;
     osc.type = wave_types[ document.getElementById('wave-type-slider').value ];
-    osc.connect(context.destination);
+    osc.connect(volume);
+    //osc.connect(context.destination);
     osc.start(0);
     osc.stop(context.currentTime + duration);
     return osc;
