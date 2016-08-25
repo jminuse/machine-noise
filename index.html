@@ -39,7 +39,7 @@ input[type=button] {
 <body style="text-align:center; background:white; position:relative;">
 
 <div id='controls' style='position:absolute; top:50%; width:100%;'>
-<input type="button" value="Test music" onclick="toggle_play('notes');"/>
+<input type="button" value="Toggle play" onclick="toggle_play('notes');"/>
 <input id="volume-slider" type="range" min="0.0" max="1.0" step="0.01"/>
 <input id="scale-slider" type="range" min="0" max="4" step="1"/>
 </div>
@@ -58,18 +58,6 @@ sounds[name].frequency.value = 261.6; // middle C
 sounds[name].playing = false;
 sounds[name].start(0);
 
-function strobe_note() {
-  var milliseconds = +new Date();
-  sounds['notes'].frequency.value = 200+(milliseconds/10) % 200
-}
-function rand_note() {
-  sounds['notes'].frequency.value = 200+Math.random()*200;
-}
-function rand_walk() {
-  sounds['notes'].frequency.value += (Math.random()-0.5)*20 + (Math.random()-0.5)*20 + (Math.random()-0.5)*20; //approximate Gaussian
-  if( sounds['notes'].frequency.value > 500 ) 500*2 - sounds['notes'].frequency.value;
-  if( sounds['notes'].frequency.value < 200 ) 200*2 - sounds['notes'].frequency.value;
-}
 var scales = {};
 scales[0] = [0,2,4,5,7,9,11,12]; // major scale
 scales[1] = [0,2,3,5,7,8,10,12]; //minor scale
