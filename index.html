@@ -92,8 +92,7 @@ function playNote(note, duration) {
     osc.frequency.value = note;
     osc.connect(context.destination);
     osc.start(0);
-    osc.noteOn(context.currentTime);
-    osc.noteOff(context.currentTime + duration);
+    osc.stop(duration);
     return osc;
 }
 function multi_notes() {
@@ -101,7 +100,7 @@ function multi_notes() {
   var note = scale[ randint(scale.length) ];
   var duration = 200 + randint(3)*100;
   //if( sounds[name].playing )
-    playNote(note, duration);
+    playNote(note, duration/1000.0);
   setTimeout(multi_notes, duration+50);
 }
 //playNote(440, 1000);
