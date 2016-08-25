@@ -91,6 +91,8 @@ function playNote(note, duration) {
     var osc = context.createOscillator();
     osc.frequency.value = note;
     osc.connect(context.destination);
+    osc.start(0);
+    alert(context.currentTime);
     osc.noteOn(context.currentTime);
     osc.noteOff(context.currentTime + duration);
     return osc;
