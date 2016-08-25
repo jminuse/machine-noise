@@ -90,6 +90,7 @@ function equal_temperament() {
 function playNote(note, duration) {
     var osc = context.createOscillator();
     osc.frequency.value = note;
+    osc.type = wave_types[ document.getElementById('wave-type-slider').value ];
     osc.connect(context.destination);
     osc.start(0);
     osc.stop(context.currentTime + duration);
