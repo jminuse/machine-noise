@@ -61,7 +61,7 @@ document.getElementById('wave-type-slider').onchange = function() {
 };
 sounds[name].frequency.value = 261.6; // middle C
 sounds[name].playing = false;
-sounds[name].start(0);
+//sounds[name].start(0);
 
 function randint(N) {
     return (Math.random()*N) | 0;
@@ -88,12 +88,11 @@ function equal_temperament() {
 }
 //equal_temperament();
 function playNote(note, duration) {
-    var ctx = window.audioContext;
-    var osc = ctx.createOscillator();
+    var osc = context.createOscillator();
     osc.frequency.value = note;
-    osc.connect(ctx.destination);
-    osc.noteOn(ctx.currentTime);
-    osc.noteOff(ctx.currentTime + duration);
+    osc.connect(context.destination);
+    osc.noteOn(context.currentTime);
+    osc.noteOff(context.currentTime + duration);
     return osc;
 }
 function multi_notes() {
@@ -108,11 +107,11 @@ multi_notes();
 
 function toggle_play(sound_name) {
   var sound = sounds[sound_name];
-  if(!sound.playing) {
+  /*if(!sound.playing) {
     sound.connect(context.destination);
   } else {
     sound.disconnect(context.destination);
-  }
+  }*/
   sound.playing = !sound.playing;
 }
 
