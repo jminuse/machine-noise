@@ -42,6 +42,7 @@ input[type=button] {
 <input type="button" value="White noise" onclick="toggle_play('white');"/>
 <input type="button" value="Test music" onclick="toggle_play('notes');"/>
 <input id="volume-slider" type="range" min="0.0" max="1.0" step="0.01"/>
+<input id="scale-slider" type="range" min="0" max="3" step="1"/>
 </div>
 
 <script>
@@ -57,6 +58,8 @@ function init_sound(name) {
 }
 var volume_slider = document.getElementById('volume-slider');
 volume_slider.value = 0.5;
+var scale_slider = document.getElementById('scale-slider');
+scale_slider.value = 1;
 
 init_sound('white');
 sounds['white'].onaudioprocess = function(e) {
@@ -101,11 +104,13 @@ function rand_walk() {
   if( sounds['notes'].frequency.value > 500 ) 500*2 - sounds['notes'].frequency.value;
   if( sounds['notes'].frequency.value < 200 ) 200*2 - sounds['notes'].frequency.value;
 }
-//var semitone_distances = [0,2,4,5,7,9,11,12]; // major scale
-//var semitone_distances = [0,2,3,5,7,8,10,12] //minor scale
-var semitone_distances = [0,3,5,6,7,10,12]; // jazzier
-// var semitone_distances = // [4,5,7,11] // Ryukyu scale
+var scales = {};
+scales[0] = [0,2,4,5,7,9,11,12]; // major scale
+scales[1] = [0,2,3,5,7,8,10,12] //minor scale
+scales[2] = [0,3,5,6,7,10,12]; // jazzier
+scales[3] = [4,5,7,11] // Ryukyu scale
 function equal_temperament() {
+  semitone_distances = scales[ scale_slider.value ];
   semitone_distance = semitone_distances[ (Math.random()*semitone_distances.length) | 0 ];
   sounds['notes'].frequency.value = 440 * Math.pow(2, (semitone_distance/12));
   if(Math.random()<0.1) sounds['notes'].frequency.value = 0; // pause?
