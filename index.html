@@ -54,7 +54,7 @@ scale_slider.value = 0;
 
 var name = 'notes';
 sounds[name] = context.createOscillator();
-sounds[name].oscillator.type = 'square';
+sounds[name].type = 'square';
 sounds[name].frequency.value = 261.6; // middle C
 sounds[name].playing = false;
 sounds[name].start(0);
