@@ -86,7 +86,25 @@ function equal_temperament() {
   sounds['notes'].frequency.value = note;
   setTimeout(equal_temperament, 200 + randint(3)*100 );
 }
-equal_temperament();
+//equal_temperament();
+function playNote(note, duration) {
+    var ctx = window.audioContext;
+    var osc = ctx.createOscillator();
+    osc.frequency.value = note;
+    osc.connect(ctx.destination);
+    osc.noteOn(ctx.currentTime);
+    osc.noteOff(ctx.currentTime + duration);
+    return osc;
+}
+function multi_notes() {
+  var scale = scales[ scale_slider.value ];
+  var note = scale[ randint(scale.length) ];
+  var duration = 200 + randint(3)*100;
+  if( sounds[name].playing )
+    playNote(note, duration);
+  setTimeout(multi_notes, duration+50);
+}
+multi_notes();
 
 function toggle_play(sound_name) {
   var sound = sounds[sound_name];
