@@ -39,7 +39,6 @@ input[type=button] {
 <body style="text-align:center; background:white; position:relative;">
 
 <div id='controls' style='position:absolute; top:50%; width:100%;'>
-<input type="button" value="White noise" onclick="toggle_play('white');"/>
 <input type="button" value="Test music" onclick="toggle_play('notes');"/>
 <input id="volume-slider" type="range" min="0.0" max="1.0" step="0.01"/>
 <input id="scale-slider" type="range" min="0" max="4" step="1"/>
@@ -47,44 +46,11 @@ input[type=button] {
 
 <script>
 var context = new AudioContext();
-var sample_duration_seconds = 1.0;
-var bufferSize = 2 << 12; // sample_duration_seconds * context.sampleRate; // buffer is a time series of notes
 var sounds = {};
-function init_sound(name) {
-    var input_channels = 0;
-    var output_channels = 1;
-    sounds[name] = context.createScriptProcessor(bufferSize, input_channels, output_channels);
-    sounds[name].playing = false;
-}
 var volume_slider = document.getElementById('volume-slider');
 volume_slider.value = 0.5;
 var scale_slider = document.getElementById('scale-slider');
 scale_slider.value = 0;
-
-init_sound('white');
-sounds['white'].onaudioprocess = function(e) {
-  var outputBuffer = e.outputBuffer;
-  for (var channel = 0; channel < outputBuffer.numberOfChannels; channel++) {
-    var outputData = outputBuffer.getChannelData(channel);
-    for (var i = 0; i < bufferSize; i++) {
-      outputData[i] = volume_slider.value * ( Math.random()*2-1 ); // audio points are in range [-1.0,1.0]
-    }
-  }
-}
-init_sound('test');
-sounds['test'].onaudioprocess = function(e) {
-  var outputBuffer = e.outputBuffer;
-  var start_time = +new Date();
-  for (var channel = 0; channel < outputBuffer.numberOfChannels; channel++) {
-    var outputData = outputBuffer.getChannelData(channel);
-    for (var i = 0; i < bufferSize; i++) {
-      var time = i/context.sampleRate + start_time/1000;
-      var frequency = 400;
-      var angle = 2 * 3.14159 * frequency * time;
-      outputData[i] = volume_slider.value;
-    }
-  }
-}
 
 var name = 'notes';
 sounds[name] = context.createOscillator();
