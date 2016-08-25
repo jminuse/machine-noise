@@ -62,18 +62,24 @@ function randint(N) {
     return (Math.random()*N) | 0;
 }
 
+var semitones = {};
+semitones[0] = [0,2,4,5,7,9,11,12]; // major scale
+semitones[1] = [0,2,3,5,7,8,10,12]; //minor scale
+semitones[2] = [0,3,5,6,7,10,12]; // jazzier
+semitones[3] = [4,5,7,11]; // Ryukyu scale
+semitones[4] = [0,1,2,3,4,5,6,7,8,9,10,11,12]; // uniform?
 var scales = {};
-scales[0] = [0,2,4,5,7,9,11,12]; // major scale
-scales[1] = [0,2,3,5,7,8,10,12]; //minor scale
-scales[2] = [0,3,5,6,7,10,12]; // jazzier
-scales[3] = [4,5,7,11]; // Ryukyu scale
-scales[4] = [0,1,2,3,4,5,6,7,8,9,10,11,12]; // uniform?
+for(var t in semitones) {
+    scales[t] = [];
+    for(var i = 0; i<semitones[t].length; i++) {
+        scales[t][i] = 440 * Math.pow(2, (semitones[t][i]/12.0) );
+    }
+}
 function equal_temperament() {
-  semitone_distances = scales[ scale_slider.value ];
-  semitone_distance = semitone_distances[ randint(semitone_distances.length) ];
-  sounds['notes'].frequency.value = 440 * Math.pow(2, (semitone_distance/12.0));
-  //if(Math.random()<0.1) sounds['notes'].frequency.value = 0; // pause?
-  setTimeout(equal_temperament, 100 + randint(3)*100 );
+  var scale = scales[ scale_slider.value ];
+  var note = scale[ randint(scale.length) ];
+  sounds['notes'].frequency.value = note;
+  setTimeout(equal_temperament, 200 + randint(3)*100 );
 }
 equal_temperament();
 
@@ -86,12 +92,6 @@ function toggle_play(sound_name) {
   }
   sound.playing = !sound.playing;
 }
-
-s = ''
-for(var i=0; i<100; i++) {
-    s += randint(12)+'\n'
-}
-alert(s);
 
 </script>
 </body>
