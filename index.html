@@ -42,7 +42,7 @@ input[type=button] {
 <input type="button" value="White noise" onclick="toggle_play('white');"/>
 <input type="button" value="Test music" onclick="toggle_play('notes');"/>
 <input id="volume-slider" type="range" min="0.0" max="1.0" step="0.01"/>
-<input id="scale-slider" type="range" min="0" max="3" step="1"/>
+<input id="scale-slider" type="range" min="0" max="4" step="1"/>
 </div>
 
 <script>
@@ -106,16 +106,18 @@ function rand_walk() {
 }
 var scales = {};
 scales[0] = [0,2,4,5,7,9,11,12]; // major scale
-scales[1] = [0,2,3,5,7,8,10,12] //minor scale
+scales[1] = [0,2,3,5,7,8,10,12]; //minor scale
 scales[2] = [0,3,5,6,7,10,12]; // jazzier
-scales[3] = [4,5,7,11] // Ryukyu scale
+scales[3] = [4,5,7,11]; // Ryukyu scale
+scales[4] = [0,1,2,3,4,5,6,7,8,9,10,11,12]; // uniform?
 function equal_temperament() {
   semitone_distances = scales[ scale_slider.value ];
   semitone_distance = semitone_distances[ (Math.random()*semitone_distances.length) | 0 ];
   sounds['notes'].frequency.value = 440 * Math.pow(2, (semitone_distance/12.0));
   //if(Math.random()<0.1) sounds['notes'].frequency.value = 0; // pause?
+  setTimeout(equal_temperament, 400);
 }
-setInterval(equal_temperament, 200);
+equal_temperament();
 
 function toggle_play(sound_name) {
   var sound = sounds[sound_name];
