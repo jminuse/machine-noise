@@ -92,7 +92,7 @@ function playNote(note, duration) {
     osc.frequency.value = note;
     osc.connect(context.destination);
     osc.start(0);
-    osc.stop(duration);
+    osc.stop(context.currentTime + duration);
     return osc;
 }
 function multi_notes() {
