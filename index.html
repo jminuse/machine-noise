@@ -7,7 +7,7 @@
 input[type=range] {
     -webkit-appearance: none;
     display: block;
-    margin: 1em auto;
+    margin: 2em auto;
     width: 50%;
 }
 input[type=range]::-webkit-slider-runnable-track {
@@ -20,11 +20,11 @@ input[type=range]::-webkit-slider-runnable-track {
 input[type=range]::-webkit-slider-thumb {
     -webkit-appearance: none;
     border: none;
-    height: 32px;
-    width: 32px;
+    height: 64;
+    width: 64;
     border-radius: 50%;
     background: goldenrod;
-    margin-top: -8px;
+    margin-top: -16px;
 }
 input[type=button] {
     display: block;
@@ -59,7 +59,7 @@ function init_sound(name) {
 var volume_slider = document.getElementById('volume-slider');
 volume_slider.value = 0.5;
 var scale_slider = document.getElementById('scale-slider');
-scale_slider.value = 1;
+scale_slider.value = 0;
 
 init_sound('white');
 sounds['white'].onaudioprocess = function(e) {
@@ -112,10 +112,10 @@ scales[3] = [4,5,7,11] // Ryukyu scale
 function equal_temperament() {
   semitone_distances = scales[ scale_slider.value ];
   semitone_distance = semitone_distances[ (Math.random()*semitone_distances.length) | 0 ];
-  sounds['notes'].frequency.value = 440 * Math.pow(2, (semitone_distance/12));
-  if(Math.random()<0.1) sounds['notes'].frequency.value = 0; // pause?
+  sounds['notes'].frequency.value = 440 * Math.pow(2, (semitone_distance/12.0));
+  //if(Math.random()<0.1) sounds['notes'].frequency.value = 0; // pause?
 }
-setInterval(equal_temperament, 250);
+setInterval(equal_temperament, 200);
 
 function toggle_play(sound_name) {
   var sound = sounds[sound_name];
