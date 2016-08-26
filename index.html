@@ -121,7 +121,7 @@ function multi_scales() {
   if(current_note>=scale.length) current_note = scale.length-1;
   var duration = 200 + randint(3)*100;
   if( sounds[name].playing )
-    playNote(current_note, duration/1000.0);
+    playNote(scale[current_note], duration/1000.0);
   setTimeout(multi_scales, duration+50);
 }
 //playNote(440, 1000);
