@@ -39,7 +39,7 @@ input[type=button] {
 <body style="text-align:center; background:white; position:relative;">
 
 <div id='controls' style='position:absolute; top:50%; width:100%;'>
-<input type="button" value="Play" onclick="toggle_play('notes');"/>
+<input type="button" value="Play music" onclick="toggle_play('notes');"/>
 Volume <input id="volume-slider" type="range" min="0.0" max="1.0" step="0.01"/>
 Tune <input id="scale-slider" type="range" min="0" max="4" step="1"/>
 Instrument <input id="wave-type-slider" type="range" min="0" max="3" step="1"/>
@@ -113,15 +113,18 @@ function multi_notes() {
 var current_note = 0;
 function multi_scales() {
   var scale = scales[ scale_slider.value ];
-  if(randint(2) == 0)
-    current_note += 1;
-  else
-    current_note -= 1;
-  if(current_note<0) current_note = 0;
-  if(current_note>=scale.length) current_note = scale.length-1;
+  if(current_note<=0) current_note = 1;
+  else if(current_note>=scale.length-1) current_note = scale.length-2;
+  else {
+    if(randint(2) == 0)
+      current_note += 1;
+    else
+      current_note -= 1;
+  }
+  var note = scale[current_note];
   var duration = 200 + randint(3)*100;
   if( sounds[name].playing )
-    playNote(scale[current_note], duration/1000.0);
+    playNote(note, duration/1000.0);
   setTimeout(multi_scales, duration+50);
 }
 //playNote(440, 1000);
