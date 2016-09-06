@@ -40,9 +40,10 @@ input[type=button] {
 
 <div id='controls' style='position:absolute; top:50%; width:100%;'>
 <input type="button" value="Play music" onclick="toggle_play('notes');"/>
-Volume <input id="volume-slider" type="range" min="0.0" max="1.0" step="0.01"/>
+Volume <input id="volume-slider" type="range" min="0.0" max="1.0" step="0.05"/>
 Tune <input id="scale-slider" type="range" min="0" max="4" step="1"/>
 Instrument <input id="wave-type-slider" value="1" type="range" min="0" max="3" step="1"/>
+Speed <input id="speed-slider" type="range" min="0.1" max="5.0" step="0.1"/>
 </div>
 
 <script>
@@ -67,6 +68,9 @@ document.getElementById('wave-type-slider').onchange = function() {
 sounds[name].frequency.value = 261.6; // middle C
 sounds[name].playing = false;
 //sounds[name].start(0);
+
+var speed_slider = document.getElementById('speed-slider');
+speed_slider.value = 1.0;
 
 function randint(N) {
     return (Math.random()*N) | 0;
@@ -106,6 +110,7 @@ function multi_notes() {
   var scale = scales[ scale_slider.value ];
   var note = scale[ randint(scale.length) ];
   var duration = 200 + randint(3)*100;
+  duration /= speed_slider.value;
   if( sounds[name].playing )
     playNote(note, duration/1000.0);
   setTimeout(multi_notes, duration+50);
@@ -123,13 +128,14 @@ function multi_scales() {
   }
   var note = scale[current_note];
   var duration = 200 + randint(3)*100;
+  duration /= speed_slider.value;
   if( sounds[name].playing )
     playNote(note, duration/1000.0);
   setTimeout(multi_scales, duration+50);
 }
 //playNote(440, 1000);
-//multi_notes();
-multi_scales();
+multi_notes();
+//multi_scales();
 
 function toggle_play(sound_name) {
   var sound = sounds[sound_name];
